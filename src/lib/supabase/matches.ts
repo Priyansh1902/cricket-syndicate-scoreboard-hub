@@ -1,6 +1,5 @@
-
 import { supabase } from './client';
-import { Match, Innings, Ball, Over } from '@/types';
+import { Match, Innings, Ball } from '@/types';
 import { toast } from 'sonner';
 
 export async function getMatches() {
@@ -35,8 +34,8 @@ export async function createMatch(match: Omit<Match, 'id' | 'innings' | 'result'
         date: match.date,
         venue: match.venue,
         overs: match.overs,
-        team1_id: match.teams.team1.id,
-        team2_id: match.teams.team2.id,
+        team1_id: match.team1Id,
+        team2_id: match.team2Id,
         toss_winner_id: match.tossWinner?.id,
         batting_first_id: match.battingFirst?.id,
         status: match.status,
@@ -90,7 +89,7 @@ export async function recordBall(matchId: string, inningsId: string, overId: str
       .insert({
         innings_id: inningsId,
         over_id: overId,
-        ball_number: ball.ball_number,  // Changed from ballNumber to ball_number
+        ball_number: ball.ball_number,
         batsman_id: ball.batsman.id,
         bowler_id: ball.bowler.id,
         runs: ball.runs,
