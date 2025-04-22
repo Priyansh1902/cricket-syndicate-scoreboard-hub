@@ -1,29 +1,15 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { 
-  Form, 
-  FormControl, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
-  FormMessage 
-} from "@/components/ui/form";
-import { 
-  Select, 
-  SelectContent, 
-  SelectItem, 
-  SelectTrigger, 
-  SelectValue 
-} from "@/components/ui/select";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Upload, User } from "lucide-react";
+import { ArrowLeft, Upload, User, Image as ImageIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { createPlayer } from "@/lib/supabase";
+import { createPlayer, uploadPlayerPhoto } from "@/lib/supabase";
 import { toast } from "sonner";
 
 const playerSchema = z.object({
@@ -54,6 +40,10 @@ const NewPlayer = () => {
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("Photo must be less than 5MB");
+        return;
+      }
       setPhotoFile(file);
       setPhotoPreview(URL.createObjectURL(file));
     }
@@ -62,7 +52,21 @@ const NewPlayer = () => {
   const onSubmit = async (values: PlayerFormValues) => {
     setIsSubmitting(true);
     try {
-      const player = await createPlayer(values);
+      const player = await createPlayer({
+        name: values.name,
+        battingHand: values.battingHand,
+        bowlingHand: values.bowlingHand,
+        bowlingType: values.bowlingType,
+        photoUrl: null,
+      });
+
+      if (player && photoFile) {
+        const photoUrl = await uploadPlayerPhoto(player.id, photoFile);
+        if (!photoUrl) {
+          toast.error("Failed to upload photo");
+        }
+      }
+
       if (player) {
         toast.success("Player created successfully!");
         navigate("/players");
@@ -115,23 +119,43 @@ const NewPlayer = () => {
                       <User className="h-16 w-16 text-gray-500" />
                     )}
                   </div>
-                  <label htmlFor="photo-upload">
-                    <Button 
-                      type="button" 
-                      variant="outline" 
-                      className="cursor-pointer flex items-center gap-2"
-                    >
-                      <Upload className="h-4 w-4" />
-                      Upload Photo
-                    </Button>
-                    <input 
-                      id="photo-upload" 
-                      type="file" 
-                      className="hidden" 
-                      accept="image/*"
-                      onChange={handlePhotoChange}
-                    />
-                  </label>
+                  <div className="flex gap-2">
+                    <label htmlFor="camera-upload">
+                      <Button 
+                        type="button" 
+                        variant="outline" 
+                        className="cursor-pointer flex items-center gap-2"
+                      >
+                        <Upload className="h-4 w-4" />
+                        Camera
+                      </Button>
+                      <input 
+                        id="camera-upload" 
+                        type="file" 
+                        className="hidden" 
+                        accept="image/*"
+                        capture="user"
+                        onChange={handlePhotoChange}
+                      />
+                    </label>
+                    <label htmlFor="gallery-upload">
+                      <Button 
+                        type="button" 
+                        variant="outline" 
+                        className="cursor-pointer flex items-center gap-2"
+                      >
+                        <ImageIcon className="h-4 w-4" />
+                        Gallery
+                      </Button>
+                      <input 
+                        id="gallery-upload" 
+                        type="file" 
+                        className="hidden" 
+                        accept="image/*"
+                        onChange={handlePhotoChange}
+                      />
+                    </label>
+                  </div>
                 </div>
 
                 <FormField
