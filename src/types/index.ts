@@ -12,6 +12,11 @@ export interface Player {
 export interface Team {
   id: string;
   name: string;
+  logoUrl?: string | null;
+  captain?: Player | null;
+  viceCaptain?: Player | null;
+  wicketKeeper?: Player | null;
+  players?: Player[];
 }
 
 export interface Match {
@@ -20,7 +25,20 @@ export interface Match {
   team2Id: string;
   date: string;
   venue: string;
+  overs?: number;
   result: string | null;
+  status?: 'Upcoming' | 'Live' | 'Completed';
+  teams?: {
+    team1: Team;
+    team2: Team;
+  };
+  tossWinner?: Team;
+  battingFirst?: Team;
+  tournament?: Tournament;
+  innings?: Innings[];
+  winner?: string;
+  margin?: string;
+  manOfTheMatch?: Player;
 }
 
 export interface Tournament {
@@ -29,4 +47,52 @@ export interface Tournament {
   startDate: string;
   endDate: string;
   teams: Team[];
+  status?: 'Upcoming' | 'Live' | 'Completed';
+  matches?: Match[];
+}
+
+export interface Innings {
+  id: string;
+  match_id: string;
+  teamBatting: Team;
+  teamBowling: Team;
+  totalRuns: number;
+  totalWickets: number;
+  extras: {
+    wides: number;
+    noBalls: number;
+    byes: number;
+    legByes: number;
+  };
+  completed: boolean;
+  overs?: Over[];
+}
+
+export interface Over {
+  id: string;
+  innings_id: string;
+  over_number: number;
+  bowler: Player;
+  runs: number;
+  wickets: number;
+  balls?: Ball[];
+}
+
+export interface Ball {
+  id: string;
+  innings_id: string;
+  over_id: string;
+  ball_number: number;
+  batsman: Player;
+  bowler: Player;
+  runs: number;
+  extras?: {
+    type: 'Wide' | 'No Ball' | 'Bye' | 'Leg Bye';
+    runs: number;
+  };
+  wicket?: {
+    type: 'Bowled' | 'Caught' | 'LBW' | 'Run Out' | 'Stumped' | 'Hit Wicket';
+    playerOut: Player;
+    fielder?: Player;
+  };
 }
