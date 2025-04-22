@@ -1,7 +1,5 @@
 
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +9,8 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { createPlayer, uploadPlayerPhoto } from "@/lib/supabase";
+import { TextFormField } from "./form-fields/TextFormField";
+import { SelectFormField } from "./form-fields/SelectFormField";
 
 const playerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -20,6 +20,18 @@ const playerSchema = z.object({
 });
 
 type PlayerFormValues = z.infer<typeof playerSchema>;
+
+const handOptions = [
+  { value: "Right", label: "Right Handed" },
+  { value: "Left", label: "Left Handed" },
+];
+
+const bowlingOptions = [
+  { value: "Spinner", label: "Spinner" },
+  { value: "Pacer", label: "Pacer" },
+  { value: "All-rounder", label: "All-rounder" },
+  { value: "None", label: "None (Batsman only)" },
+];
 
 export const PlayerForm = () => {
   const navigate = useNavigate();
@@ -87,97 +99,37 @@ export const PlayerForm = () => {
           onPhotoChange={handlePhotoChange}
         />
 
-        <FormField
+        <TextFormField
           control={form.control}
           name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter player name" {...field} className="cricket-input" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Name"
+          placeholder="Enter player name"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <FormField
+          <SelectFormField
             control={form.control}
             name="battingHand"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Batting Hand</FormLabel>
-                <Select 
-                  onValueChange={field.onChange} 
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger className="cricket-input">
-                      <SelectValue placeholder="Select batting hand" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Right">Right Handed</SelectItem>
-                    <SelectItem value="Left">Left Handed</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Batting Hand"
+            options={handOptions}
+            placeholder="Select batting hand"
           />
 
-          <FormField
+          <SelectFormField
             control={form.control}
             name="bowlingHand"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Bowling Hand</FormLabel>
-                <Select 
-                  onValueChange={field.onChange} 
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger className="cricket-input">
-                      <SelectValue placeholder="Select bowling hand" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="Right">Right Handed</SelectItem>
-                    <SelectItem value="Left">Left Handed</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
+            label="Bowling Hand"
+            options={handOptions}
+            placeholder="Select bowling hand"
           />
         </div>
 
-        <FormField
+        <SelectFormField
           control={form.control}
           name="bowlingType"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Bowling Type</FormLabel>
-              <Select 
-                onValueChange={field.onChange} 
-                defaultValue={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger className="cricket-input">
-                    <SelectValue placeholder="Select bowling type" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="Spinner">Spinner</SelectItem>
-                  <SelectItem value="Pacer">Pacer</SelectItem>
-                  <SelectItem value="All-rounder">All-rounder</SelectItem>
-                  <SelectItem value="None">None (Batsman only)</SelectItem>
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
+          label="Bowling Type"
+          options={bowlingOptions}
+          placeholder="Select bowling type"
         />
 
         <div className="flex justify-end gap-4 pt-4">
