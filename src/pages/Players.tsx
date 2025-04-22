@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -57,7 +56,7 @@ const Players = () => {
       ));
     } else if (type === "all-rounder") {
       setFilteredPlayers(players.filter(player => 
-        player.bowlingType !== "None" && player.battingHand !== "None"
+        player.bowlingType !== "None" && player.battingHand !== "None" 
       ));
     }
   };

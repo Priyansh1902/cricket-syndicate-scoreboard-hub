@@ -1,9 +1,12 @@
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
 export const PlayerHeader = () => {
+  const location = useLocation();
+  const isEditMode = location.pathname.includes('/edit/');
+  
   return (
     <header className="py-6 px-4 sm:px-6 lg:px-8 border-b border-cricket-border">
       <div className="container mx-auto flex justify-between items-center">
@@ -17,7 +20,7 @@ export const PlayerHeader = () => {
             <Link to="/" className="text-cricket-primary hover:text-cricket-accent font-bold text-xl">
               Cricket Syndicate
             </Link>
-            <h1 className="text-2xl font-bold mt-1">New Player</h1>
+            <h1 className="text-2xl font-bold mt-1">{isEditMode ? "Edit Player" : "New Player"}</h1>
           </div>
         </div>
       </div>

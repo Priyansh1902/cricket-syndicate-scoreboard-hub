@@ -18,6 +18,23 @@ export async function getPlayers() {
   }
 }
 
+export async function getPlayerById(id: string) {
+  try {
+    const { data, error } = await supabase
+      .from('players')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) throw error;
+    return data;
+  } catch (error) {
+    console.error('Error fetching player:', error);
+    toast.error('Failed to load player');
+    return null;
+  }
+}
+
 export async function createPlayer(player: Omit<Player, 'id'>) {
   try {
     const { data, error } = await supabase
