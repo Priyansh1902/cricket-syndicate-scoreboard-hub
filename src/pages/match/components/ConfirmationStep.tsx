@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -92,10 +91,12 @@ export function ConfirmationStep({
           </Tabs>
           
           <div className="pt-4 flex justify-between">
-            <Button variant="outline" className="border-cricket-border text-white" onClick={prevStep}>
-              <ChevronLeft className="w-4 h-4 mr-1" />
-              Previous
-            </Button>
+            {prevStep && (
+              <Button variant="outline" className="border-cricket-border text-white" onClick={prevStep}>
+                <ChevronLeft className="w-4 h-4 mr-1" />
+                Previous
+              </Button>
+            )}
             <Button 
               className="cricket-button" 
               onClick={onSubmit}
