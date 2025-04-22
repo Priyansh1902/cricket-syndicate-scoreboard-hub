@@ -5,7 +5,7 @@ export interface Player {
   photoUrl?: string;
   battingHand: 'Right' | 'Left';
   bowlingHand: 'Right' | 'Left';
-  bowlingType: 'Spinner' | 'Pacer' | 'All-rounder' | 'None';
+  bowlingType: 'Off Spin' | 'Leg Spin' | 'Left-arm Orthodox' | 'Left-arm Chinaman' | 'Medium Fast' | 'Fast' | 'None';
   teams?: Team[];
 }
 

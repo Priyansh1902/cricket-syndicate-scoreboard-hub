@@ -1,6 +1,6 @@
 
 import { Button } from "@/components/ui/button";
-import { Upload, User, Image as ImageIcon } from "lucide-react";
+import { Upload, Camera } from "lucide-react";
 
 interface PhotoUploadProps {
   photoPreview: string | null;
@@ -18,7 +18,7 @@ export const PhotoUpload = ({ photoPreview, onPhotoChange }: PhotoUploadProps) =
             className="w-full h-full object-cover"
           />
         ) : (
-          <User className="h-16 w-16 text-gray-500" />
+          <Camera className="h-16 w-16 text-gray-500" />
         )}
       </div>
       <div className="flex gap-2">
@@ -26,35 +26,35 @@ export const PhotoUpload = ({ photoPreview, onPhotoChange }: PhotoUploadProps) =
           <Button 
             type="button" 
             variant="outline" 
-            className="cursor-pointer flex items-center gap-2"
+            className="cursor-pointer"
           >
-            <Upload className="h-4 w-4" />
+            <Camera className="h-4 w-4 mr-2" />
             Camera
           </Button>
           <input 
             id="camera-upload" 
             type="file" 
-            className="hidden" 
             accept="image/*"
-            capture="user"
+            capture="environment"
             onChange={onPhotoChange}
+            className="hidden"
           />
         </label>
         <label htmlFor="gallery-upload">
           <Button 
             type="button" 
             variant="outline" 
-            className="cursor-pointer flex items-center gap-2"
+            className="cursor-pointer"
           >
-            <ImageIcon className="h-4 w-4" />
+            <Upload className="h-4 w-4 mr-2" />
             Gallery
           </Button>
           <input 
             id="gallery-upload" 
             type="file" 
-            className="hidden" 
             accept="image/*"
             onChange={onPhotoChange}
+            className="hidden"
           />
         </label>
       </div>

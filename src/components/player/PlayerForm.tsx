@@ -16,7 +16,15 @@ const playerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   battingHand: z.enum(["Right", "Left"]),
   bowlingHand: z.enum(["Right", "Left"]),
-  bowlingType: z.enum(["Spinner", "Pacer", "All-rounder", "None"]),
+  bowlingType: z.enum([
+    "Off Spin",
+    "Leg Spin",
+    "Left-arm Orthodox",
+    "Left-arm Chinaman",
+    "Medium Fast",
+    "Fast",
+    "None"
+  ]),
 });
 
 type PlayerFormValues = z.infer<typeof playerSchema>;
@@ -27,9 +35,12 @@ const handOptions = [
 ];
 
 const bowlingOptions = [
-  { value: "Spinner", label: "Spinner" },
-  { value: "Pacer", label: "Pacer" },
-  { value: "All-rounder", label: "All-rounder" },
+  { value: "Off Spin", label: "Off Spin" },
+  { value: "Leg Spin", label: "Leg Spin" },
+  { value: "Left-arm Orthodox", label: "Left-arm Orthodox" },
+  { value: "Left-arm Chinaman", label: "Left-arm Chinaman" },
+  { value: "Medium Fast", label: "Medium Fast" },
+  { value: "Fast", label: "Fast" },
   { value: "None", label: "None (Batsman only)" },
 ];
 
