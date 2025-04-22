@@ -8,7 +8,9 @@ import Index from "./pages/Index";
 import Matches from "./pages/Matches";
 import NewMatch from "./pages/NewMatch";
 import Teams from "./pages/Teams";
+import NewTeam from "./pages/NewTeam";
 import Players from "./pages/Players";
+import NewPlayer from "./pages/NewPlayer";
 import Tournaments from "./pages/Tournaments";
 import NotFound from "./pages/NotFound";
 
@@ -25,7 +27,9 @@ const App = () => (
           <Route path="/matches" element={<Matches />} />
           <Route path="/matches/new" element={<NewMatch />} />
           <Route path="/teams" element={<Teams />} />
+          <Route path="/teams/new" element={<NewTeam />} />
           <Route path="/players" element={<Players />} />
+          <Route path="/players/new" element={<NewPlayer />} />
           <Route path="/tournaments" element={<Tournaments />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

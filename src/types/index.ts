@@ -42,6 +42,7 @@ export interface Match {
 
 export interface Innings {
   id: string;
+  match_id: string; // Added match_id field
   teamBatting: Team;
   teamBowling: Team;
   overs: Over[];

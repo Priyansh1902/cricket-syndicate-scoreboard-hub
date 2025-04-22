@@ -2,11 +2,12 @@
 import { createClient } from '@supabase/supabase-js';
 import { Player, Team, Match, Tournament, Innings, Over, Ball } from '@/types';
 import { toast } from 'sonner';
+import { supabaseConfig } from '@/config';
 
 // Initialize with valid URL patterns to prevent runtime errors
 // These will be replaced with real values when connecting to Supabase
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder-project.supabase.co';
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder-key-that-is-long-enough-to-pass-validation';
+const supabaseUrl = supabaseConfig.url;
+const supabaseKey = supabaseConfig.anonKey;
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
@@ -274,7 +275,7 @@ export async function createInnings(innings: Omit<Innings, 'id' | 'overs'>) {
     const { data, error } = await supabase
       .from('innings')
       .insert({
-        match_id: innings.id,
+        match_id: innings.match_id, // Fixed: use match_id instead of id
         team_batting_id: innings.teamBatting.id,
         team_bowling_id: innings.teamBowling.id,
         total_runs: innings.totalRuns,
