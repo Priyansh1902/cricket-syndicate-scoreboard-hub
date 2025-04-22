@@ -82,7 +82,7 @@ export interface Ball {
   id: string;
   innings_id: string;
   over_id: string;
-  ball_number: number;
+  ball_number: number;  // Changed from ballNumber to ball_number for consistency
   batsman: Player;
   bowler: Player;
   runs: number;

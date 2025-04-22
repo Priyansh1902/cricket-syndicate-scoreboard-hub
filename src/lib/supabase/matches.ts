@@ -90,7 +90,7 @@ export async function recordBall(matchId: string, inningsId: string, overId: str
       .insert({
         innings_id: inningsId,
         over_id: overId,
-        ball_number: ball.ballNumber,
+        ball_number: ball.ball_number,  // Changed from ballNumber to ball_number
         batsman_id: ball.batsman.id,
         bowler_id: ball.bowler.id,
         runs: ball.runs,
