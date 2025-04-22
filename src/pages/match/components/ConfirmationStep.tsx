@@ -8,7 +8,8 @@ import { Team, Tournament } from "@/types";
 
 export function ConfirmationStep({ 
   matchDetails, 
-  prevStep, 
+  prevStep,
+  nextStep, 
   teams, 
   tournaments, 
   isLoading, 

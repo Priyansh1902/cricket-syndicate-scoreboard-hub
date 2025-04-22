@@ -1,6 +1,7 @@
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Users, Info, Trophy, Clock } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { getTeams, getTournaments } from "@/lib/supabase";
 import { Team, Tournament } from "@/types";
@@ -92,6 +93,7 @@ const NewMatch = () => {
         return (
           <ConfirmationStep
             {...commonProps}
+            nextStep={nextStep}
             prevStep={prevStep}
             onSubmit={() => handleSubmit(teams, tournaments)}
           />
