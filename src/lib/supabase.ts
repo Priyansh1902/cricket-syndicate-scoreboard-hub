@@ -1,11 +1,12 @@
 
 import { createClient } from '@supabase/supabase-js';
-import { Player, Team, Match, Tournament } from '@/types';
+import { Player, Team, Match, Tournament, Innings, Over, Ball } from '@/types';
 import { toast } from 'sonner';
 
-// This will be replaced by environment variables after Supabase is connected
-const supabaseUrl = 'your-supabase-url';
-const supabaseKey = 'your-supabase-anon-key';
+// Initialize with valid URL patterns to prevent runtime errors
+// These will be replaced with real values when connecting to Supabase
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || 'https://placeholder-project.supabase.co';
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY || 'placeholder-key-that-is-long-enough-to-pass-validation';
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
