@@ -2,8 +2,11 @@
 import { PlayerHeader } from "@/components/player/PlayerHeader";
 import { PlayerForm } from "@/components/player/PlayerForm";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useParams } from "react-router-dom";
 
 const EditPlayer = () => {
+  const { id } = useParams<{ id: string }>();
+  
   return (
     <div className="min-h-screen bg-cricket-darkest text-white">
       <PlayerHeader />
@@ -13,7 +16,7 @@ const EditPlayer = () => {
             <CardTitle className="text-xl">Edit Player Information</CardTitle>
           </CardHeader>
           <CardContent>
-            <PlayerForm mode="edit" />
+            {id && <PlayerForm playerId={id} />}
           </CardContent>
         </Card>
       </main>

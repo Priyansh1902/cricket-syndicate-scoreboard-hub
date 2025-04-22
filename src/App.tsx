@@ -11,6 +11,7 @@ import Teams from "./pages/Teams";
 import NewTeam from "./pages/NewTeam";
 import Players from "./pages/Players";
 import NewPlayer from "./pages/NewPlayer";
+import EditPlayer from "./pages/EditPlayer";
 import Tournaments from "./pages/Tournaments";
 import NotFound from "./pages/NotFound";
 

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { UserPlus, User, Search, ChevronRight } from "lucide-react";
+import { UserPlus, User, Search, ChevronRight, Edit } from "lucide-react";
 import { getPlayers } from "@/lib/supabase";
 import { Player } from "@/types";
 
@@ -53,10 +53,12 @@ const Players = () => {
       setFilteredPlayers(players.filter(player => player.bowlingType === "None"));
     } else if (type === "bowler") {
       setFilteredPlayers(players.filter(player => 
-        player.bowlingType === "Spinner" || player.bowlingType === "Pacer"
+        player.bowlingType !== "None"
       ));
     } else if (type === "all-rounder") {
-      setFilteredPlayers(players.filter(player => player.bowlingType === "All-rounder"));
+      setFilteredPlayers(players.filter(player => 
+        player.bowlingType !== "None" && player.battingHand !== "None"
+      ));
     }
   };
 
@@ -194,15 +196,27 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
           </div>
         )}
       </CardContent>
-      <CardFooter className="pt-0">
+      <CardFooter className="pt-0 flex justify-between">
         <Button 
           variant="ghost" 
-          className="w-full justify-between text-cricket-primary hover:text-white hover:bg-cricket-primary/20"
+          size="sm"
+          className="text-cricket-primary hover:text-white hover:bg-cricket-primary/20"
+          asChild
+        >
+          <Link to={`/players/edit/${player.id}`}>
+            <Edit className="w-4 h-4 mr-1" />
+            Edit
+          </Link>
+        </Button>
+        <Button 
+          variant="ghost" 
+          size="sm"
+          className="text-cricket-primary hover:text-white hover:bg-cricket-primary/20"
           asChild
         >
           <Link to={`/players/${player.id}`}>
-            View Profile
-            <ChevronRight className="w-4 h-4" />
+            View
+            <ChevronRight className="w-4 h-4 ml-1" />
           </Link>
         </Button>
       </CardFooter>
